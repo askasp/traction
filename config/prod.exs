@@ -11,7 +11,7 @@ use Mix.Config
 # before starting your production server.
 config :traction, TractionWeb.Endpoint,
   url: [port: 4006],
-  check_origin: false,
+  check_origin: ["*traction.stadler.no"],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Do not print debug messages in production
