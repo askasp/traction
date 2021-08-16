@@ -42,7 +42,7 @@ defmodule Traction.DiscordPoller do
           total: data["approximate_member_count"]
         })
 
-      Traction.Repo.insert!(measuremet)
+      Traction.Repo.insert(measuremet)
     end)
 
     :ok = Phoenix.PubSub.broadcast(Traction.PubSub, "new_measuerments", :new_measurements)
