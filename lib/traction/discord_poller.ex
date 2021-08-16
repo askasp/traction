@@ -33,6 +33,7 @@ defmodule Traction.DiscordPoller do
 
       data = result.body |> Jason.decode!()
       IO.puts("got result from disdocrd")
+      IO.inspect(@auth_key)
       IO.inspect(data)
 
       measuremet =
