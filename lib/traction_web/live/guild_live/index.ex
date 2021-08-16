@@ -7,7 +7,7 @@ defmodule TractionWeb.GuildLive.Index do
   @impl true
   def mount(_params, _session, socket) do
     :ok = Phoenix.PubSub.subscribe(Traction.PubSub, "new_measuerments")
-    send(self(), :new_measuerments)
+    send(self(), :new_measurements)
 
     {:ok, assign(socket, :guilds, [])}
   end
