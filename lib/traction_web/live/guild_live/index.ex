@@ -6,10 +6,11 @@ defmodule TractionWeb.GuildLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    :ok = Phoenix.PubSub.subscribe(Traction.PubSub, "new_measuerments")
-    send(self(), :new_measurements)
+    guilds = Enum.map(list_guilds(), fn guild -> add_chart_to_guild(guild) end)
 
-    {:ok, assign(socket, :guilds, [])}
+    :ok = Phoenix.PubSub.subscribe(Traction.PubSub, "new_measuerments")
+
+    {:ok, assign(socket, :guilds, guilds)}
   end
 
   @impl true
