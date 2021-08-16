@@ -32,6 +32,8 @@ defmodule Traction.DiscordPoller do
         |> Finch.request(MyFinch)
 
       data = result.body |> Jason.decode!()
+      IO.puts("got result from disdocrd")
+      IO.inspect(data)
 
       measuremet =
         Ecto.build_assoc(guild, :measurements, %{
