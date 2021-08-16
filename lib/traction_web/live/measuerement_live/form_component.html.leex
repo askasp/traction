@@ -1,0 +1,18 @@
+<h2><%= @title %></h2>
+
+<%= f = form_for @changeset, "#",
+  id: "measuerement-form",
+  phx_target: @myself,
+  phx_change: "validate",
+  phx_submit: "save" %>
+
+  <%= label f, :total %>
+  <%= number_input f, :total %>
+  <%= error_tag f, :total %>
+
+  <%= label f, :online %>
+  <%= number_input f, :online %>
+  <%= error_tag f, :online %>
+
+  <%= submit "Save", phx_disable_with: "Saving..." %>
+</form>

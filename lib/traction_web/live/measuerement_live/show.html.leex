@@ -1,0 +1,27 @@
+<h1>Show Measuerement</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, TractionWeb.MeasuerementLive.FormComponent,
+    id: @measuerement.id,
+    title: @page_title,
+    action: @live_action,
+    measuerement: @measuerement,
+    return_to: Routes.measuerement_show_path(@socket, :show, @measuerement) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Total:</strong>
+    <%= @measuerement.total %>
+  </li>
+
+  <li>
+    <strong>Online:</strong>
+    <%= @measuerement.online %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.measuerement_show_path(@socket, :edit, @measuerement), class: "button" %></span>
+<span><%= live_redirect "Back", to: Routes.measuerement_index_path(@socket, :index) %></span>

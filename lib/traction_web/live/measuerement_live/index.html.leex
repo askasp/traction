@@ -1,0 +1,37 @@
+<h1>Listing Measurements</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal @socket, TractionWeb.MeasuerementLive.FormComponent,
+    id: @measuerement.id || :new,
+    title: @page_title,
+    action: @live_action,
+    measuerement: @measuerement,
+    return_to: Routes.measuerement_index_path(@socket, :index) %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Total</th>
+      <th>Online</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="measurements">
+    <%= for measuerement <- @measurements do %>
+      <tr id="measuerement-<%= measuerement.id %>">
+        <td><%= measuerement.total %></td>
+        <td><%= measuerement.online %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.measuerement_show_path(@socket, :show, measuerement) %></span>
+          <span><%= live_patch "Edit", to: Routes.measuerement_index_path(@socket, :edit, measuerement) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: measuerement.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Measuerement", to: Routes.measuerement_index_path(@socket, :new) %></span>

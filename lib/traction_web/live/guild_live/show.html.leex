@@ -1,0 +1,32 @@
+<h1>Show Guild</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, TractionWeb.GuildLive.FormComponent,
+    id: @guild.id,
+    title: @page_title,
+    action: @live_action,
+    guild: @guild,
+    return_to: Routes.guild_show_path(@socket, :show, @guild) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Guild:</strong>
+    <%= @guild.guild_id %>
+  </li>
+
+  <li>
+    <strong>Guild name:</strong>
+    <%= @guild.guild_name %>
+  </li>
+
+  <li>
+    <strong>Added by:</strong>
+    <%= @guild.added_by %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.guild_show_path(@socket, :edit, @guild), class: "button" %></span>
+<span><%= live_redirect "Back", to: Routes.guild_index_path(@socket, :index) %></span>
