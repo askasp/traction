@@ -23,7 +23,7 @@ defmodule Traction.DiscordPoller do
     guilds = Traction.Repo.all(Traction.Discord.Guild)
 
     Enum.map(guilds, fn guild ->
-      {:ok, result} =
+      resp =
         Finch.build(
           :get,
           "https://discord.com/api/v9/guilds/#{guild.guild_id}?with_counts=true",
@@ -31,18 +31,23 @@ defmodule Traction.DiscordPoller do
         )
         |> Finch.request(MyFinch)
 
-      data = result.body |> Jason.decode!()
-      IO.puts("got result from disdocrd")
-      IO.inspect(@auth_key)
-      IO.inspect(data)
+      case resp do
+        {:ok, result} ->
+          data = result.body |> Jason.decode!()
+          IO.puts("got result from disdocrd")
 
-      measuremet =
-        Ecto.build_assoc(guild, :measurements, %{
-          online: data["approximate_presence_count"],
-          total: data["approximate_member_count"]
-        })
+          measuremet =
+            Ecto.build_assoc(guild, :measurements, %{
+              online: data["approximate_presence_count"],
+              total: data["approximate_member_count"]
+            })
 
-      Traction.Repo.insert(measuremet)
+          Traction.Repo.insert(measuremet)
+
+        x ->
+          IO.puts("got error")
+          IO.inspect(x)
+      end
     end)
 
     :ok = Phoenix.PubSub.broadcast(Traction.PubSub, "new_measuerments", :new_measurements)
