@@ -52,7 +52,7 @@ defmodule Traction.DiscordPoller do
 
     :ok = Phoenix.PubSub.broadcast(Traction.PubSub, "new_measuerments", :new_measurements)
 
-    Process.send_after(self(), :poll_discord, 900_000)
+    Process.send_after(self(), :poll_discord, 3_600_000)
 
     {:noreply, %{}}
   end
