@@ -42,7 +42,9 @@ defmodule Traction.DiscordPoller do
               total: data["approximate_member_count"]
             })
 
-          Traction.Repo.insert(measuremet)
+          if measuremet.online != nil and measuremet.total != nil do
+            Traction.Repo.insert(measuremet)
+          end
 
         x ->
           IO.puts("got error")
